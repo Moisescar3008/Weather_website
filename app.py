@@ -73,9 +73,17 @@ for city in cities:
                 "Snow volume": snow_volume
             })
 
-        # Guardar los datos en un archivo CSV
-        df = pd.DataFrame(weather_data)
+        # Guardar en CSV
+        filename = os.path.join("csv", f"{clean_city}_weather.csv")
+        parent_dir = os.path.dirname(filename)
+        
+        # Verificar si la carpeta existe, si no, crearla
+        if parent_dir and not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
+        
         df.to_csv(filename, index=False, encoding="utf-8")
+        st.success(f"Datos guardados en `{filename}`")
+
 
         response = requests.get(url, timeout=10)  # 10 segundos de tiempo de espera
 
