@@ -1,0 +1,5 @@
+.envvenv/
+csv/
+credentials/
+weather_charts/
+.env
