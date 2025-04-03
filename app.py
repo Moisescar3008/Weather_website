@@ -1,15 +1,15 @@
-import json
-import requests
 import pandas as pd
 import streamlit as st
 from datetime import datetime
 import re
 import os
+import requests
 from dotenv import load_dotenv
+from visualization import generate_graphs
 
 # Cargar variables de entorno
 load_dotenv()  
-api_k = os.getenv("OPENWEATHER_API_KEY")
+api_k = st.secrets["OPENWEATHER_API_KEY"]
 
 # Título de la app
 st.title("📊 Clima en las Ciudades de México")
@@ -87,7 +87,8 @@ if st.button("Obtener Clima"):
         df.to_csv(filename, index=False, encoding="utf-8")
         st.success(f"Datos guardados en `{filename}`")
 
-        st.success(f"Datos guardados en `{filename}`")
+        # 🚀 Ejecutar automáticamente `visualization.py`
+        generate_graphs(city)
 
     else:
         st.error(f"No se pudo obtener el clima de {city}. Código de error: {response.status_code}")
